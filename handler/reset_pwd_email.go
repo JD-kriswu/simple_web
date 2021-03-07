@@ -63,8 +63,14 @@ func HandleSendResetPwdEmailRequest(c *gin.Context) {
 
 	//没有接口，先打个log
 	logger.Info("reset  url ", zap.String("url", sendUrl))
+	//获取语言的cookie
+	lan, _ := c.Cookie("i8n_redirecteds")
 
-	emailBody, err := email_html.GenerateHtml(user.UserName, sendUrl, 2)
+	if lan == "" {
+		lan = "en-US"
+	}
+
+	emailBody, err := email_html.GenerateHtml(user.UserName, sendUrl, lan, 2)
 
 	if err != nil {
 		logger.Error("generate email body failed ", zap.String("user", user.UserName))

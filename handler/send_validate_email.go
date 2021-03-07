@@ -94,8 +94,13 @@ func HandleSendValidateEmailRequest(c *gin.Context) {
 	//没有接口，先打个log
 	logger.Info("valid url ", zap.String("url", sendUrl))
 
+	lan, _ := c.Cookie("i8n_redirecteds")
+
+	if lan == "" {
+		lan = "en-US"
+	}
 	//高级一点，这里用html
-	emailBody, err := email_html.GenerateHtml(user.UserName, sendUrl, 1)
+	emailBody, err := email_html.GenerateHtml(user.UserName, sendUrl, lan, 1)
 
 	if err != nil {
 		logger.Error("generate email body failed ", zap.String("user", user.UserName))

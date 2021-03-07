@@ -18,7 +18,7 @@ func TestGenerateHtml(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			gotEmailBody, err := GenerateHtml(tt.args.userName, tt.args.url, tt.args.emailType)
+			gotEmailBody, err := GenerateHtml(tt.args.userName, tt.args.url, "zh-CN", tt.args.emailType)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GenerateHtml() error = %v, wantErr %v", err, tt.wantErr)
 				return

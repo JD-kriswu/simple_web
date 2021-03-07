@@ -57,10 +57,11 @@ func HandleCreateUserLinkRequest(c *gin.Context) {
 	//根据传入的URL拉取对应的信息
 	title, desc, img, err := htmlparser2.ParseURL(linkUrl)
 
+	//jonesxu要求，这里不return
 	if err != nil {
 		logger.Error("ParseUrl failed ", zap.String("url", linkUrl), zap.Error(err))
-		c.Error(errcode.ErrInternal)
-		return
+		//c.Error(errcode.ErrInternal)
+		//return
 	}
 	var remoteUrl string
 	//根据获取到的URL地址，下载图片，上传到ucloud ,拿到新的地址
