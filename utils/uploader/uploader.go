@@ -1,7 +1,6 @@
 package uploader
 
 import (
-	"log"
 	"onbio/logger"
 	"path/filepath"
 
@@ -35,7 +34,7 @@ func UploadIMGToUcloud(path string) (remoteUrl string, err error) {
 
 	err = req.AsyncMPut(path, remoteFileName, "")
 	if err != nil {
-		log.Println("failed reason:", err.Error())
+		logger.Error("failed reason:", zap.Error(err))
 		return
 	}
 	logger.Info("succ sync pic to ucloud", zap.String("file", remoteFileName))

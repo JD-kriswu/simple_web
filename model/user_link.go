@@ -91,7 +91,7 @@ func GetUserLinkByID(id uint64) (linkItem Link, err error) {
 
 	db = db.Where("id = ?", id)
 
-	db = db.Where("use_flag = 1")
+	//db = db.Where("use_flag = 1")
 
 	err = db.First(&linkItem).Error
 

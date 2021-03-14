@@ -94,7 +94,7 @@ func HandleSendValidateEmailRequest(c *gin.Context) {
 	//没有接口，先打个log
 	logger.Info("valid url ", zap.String("url", sendUrl))
 
-	lan, _ := c.Cookie("i8n_redirecteds")
+	lan, _ := c.Cookie("i18n_redirected")
 
 	if lan == "" {
 		lan = "en-US"

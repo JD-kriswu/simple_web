@@ -75,31 +75,31 @@ func HandleCreateUserLinkRequest(c *gin.Context) {
 	} else {
 		logger.Info("download succ ", zap.String("picPath", picPath))
 
-		for {
-			//判断文件大小
-			/*
-				fileOnTmp, err := os.Stat(picPath)
-				if err != nil {
-					logger.Info("err stat file ", zap.String("file path", picPath))
-					remoteUrl = ""
-					break
-				}
-				fileSize := fileOnTmp.Size()
-
-				if fileSize < 2000 {
-					logger.Info("file is too small as a pic", zap.Int64("fileSize", fileSize))
-					remoteUrl = ""
-					break
-				}*/
-			//再上传到ucloud,超过5kb的才上传
-			//if fileSize >= 2000 {
-			remoteUrl, err = uploader.UploadIMGToUcloud(picPath)
-
+		//for {
+		//判断文件大小
+		/*
+			fileOnTmp, err := os.Stat(picPath)
 			if err != nil {
-				logger.Error("upload to ucloud failed ", zap.Error(err))
+				logger.Info("err stat file ", zap.String("file path", picPath))
+				remoteUrl = ""
+				break
 			}
-			//}
+			fileSize := fileOnTmp.Size()
+
+			if fileSize < 2000 {
+				logger.Info("file is too small as a pic", zap.Int64("fileSize", fileSize))
+				remoteUrl = ""
+				break
+			}*/
+		//再上传到ucloud,超过5kb的才上传
+		//if fileSize >= 2000 {
+		remoteUrl, err = uploader.UploadIMGToUcloud(picPath)
+
+		if err != nil {
+			logger.Error("upload to ucloud failed ", zap.Error(err))
 		}
+		//}
+		//}
 
 	}
 
@@ -114,7 +114,7 @@ func HandleCreateUserLinkRequest(c *gin.Context) {
 	//把刚写入的记录查出来，作为回显
 	link, err := model.GetUserLinkByID(id)
 	if err != nil {
-		logger.Error("create link failed ", zap.Any("id", id))
+		logger.Error("create link failed ", zap.Any("id", id), zap.Error(err))
 		c.Error(errcode.ErrInternal)
 		return
 	}
