@@ -129,6 +129,76 @@ func (p EmailType) GetGreetingWithMultiLan(lan string) (greeting string) {
 	}
 	return "Hi"
 }
+func (p EmailType) GetSigWithMultiLan(lan string) (sig string) {
+	switch lan {
+	case "zh-CN":
+		return "谢谢！"
+	case "en-US":
+		return "Thank you!"
+	case "de-DE":
+		return "Vielen Dank!"
+	case "es-ES":
+		return "¡Gracias!"
+	case "fr-FR":
+		return "Merci!"
+	case "hi-IN":
+		return "धन्यवाद!"
+	case "id-ID":
+		return "Terima kasih!"
+	case "it-IT":
+		return "Grazie!"
+	case "jp-JP":
+		return "ありがとうございました！"
+	case "ko-KR":
+		return "감사합니다!"
+	case "pt-PT":
+		return "Obrigado!"
+	case "ru-RU":
+		return "Спасибо!"
+	case "th-TH":
+		return "ขอบคุณ!"
+	case "vi-VN":
+		return "Cảm ơn bạn!"
+	case "zh-TW":
+		return "謝謝！"
+	}
+	return "Thank you!"
+}
+func (p EmailType) GetButtonTextWithMultiLan(lan string) (text string) {
+	switch lan {
+	case "zh-CN":
+		return "验证"
+	case "en-US":
+		return "Verify"
+	case "de-DE":
+		return "Überprüfen"
+	case "es-ES":
+		return "Verificar"
+	case "fr-FR":
+		return "Vérifier"
+	case "hi-IN":
+		return "सत्यापित"
+	case "id-ID":
+		return "Memverifikasi"
+	case "it-IT":
+		return "Verificare"
+	case "jp-JP":
+		return "確認"
+	case "ko-KR":
+		return "확인"
+	case "pt-PT":
+		return "Verificar"
+	case "ru-RU":
+		return "Проверяем подлинность"
+	case "th-TH":
+		return "ตรวจ สอบ"
+	case "vi-VN":
+		return "Xác minh"
+	case "zh-TW":
+		return "驗證"
+	}
+	return "Verify"
+}
 func (p EmailType) GetMultiLanContentWithReset(lan string) (pre string, after string) {
 	switch lan {
 	case "zh-CN":
@@ -217,25 +287,26 @@ func GenerateHtml(userName, url, lan string, emailType EmailType) (emailBody str
 		// Theme: new(Default)
 		Product: hermes.Product{
 			// Appears in header & footer of e-mails
-			Name: "Onb.io",
+			Name: "OnBio", // 必须有个空格，否则显示原始字符
 			Link: "https://onb.io/",
 			// Optional product logo
-			Logo:      "http://onb.io/_nuxt/assets/images/logo.png",
-			Copyright: "Onb.io",
+			Logo:      "https://onb.io/_nuxt/assets/images/logo.png",
+			Copyright: "Copyright © 2021 OnBio. All rights reserved.",
 		},
 	}
 	intros := []string{""}
 	email := hermes.Email{
 		Body: hermes.Body{
-			Greeting: emailType.GetGreetingWithMultiLan(lan),
-			Name:     userName,
-			Intros:   intros,
+			Greeting:  emailType.GetGreetingWithMultiLan(lan),
+			Name:      userName,
+			Intros:    intros,
+			Signature: emailType.GetSigWithMultiLan(lan),
 			Actions: []hermes.Action{
 				{
 					Instructions: emailType.GetIntroContent(url, lan),
 					Button: hermes.Button{
 						Color: "#22BC66", // Optional action button color
-						Text:  "Go",
+						Text:  emailType.GetButtonTextWithMultiLan(lan),
 						Link:  url,
 					},
 				},

@@ -109,9 +109,9 @@ func HandleSendValidateEmailRequest(c *gin.Context) {
 	}
 
 	var ms mailsender.MailSender = &mailsender.Mail{
-		Sender:    "Onbio<welcome@onb.io>", // 可以自定义
+		Sender:    "OnBio<welcome@onb.io>", // 可以自定义
 		Recipient: params.UserEmail,        // 如果处于Sandbox只能发送已验证过的邮箱
-		Subject:   "onbio validate email",
+		Subject:   GetTitleWithMultiLan(lan),
 		HTMLBody:  emailBody,
 		TextBody:  emailBody, // 不支持HTML的话会返回这个
 		CharSet:   "UTF-8",   // 固定字符码
@@ -165,4 +165,40 @@ func GenValidCode(userId uint64, userEmail string) (err error, emailValidCode st
 		return
 	}
 	return
+}
+
+func GetTitleWithMultiLan(lan string) (title string) {
+	switch lan {
+	case "zh-CN":
+		return "OnBio | 邮箱验证"
+	case "en-US":
+		return "OnBio | Email verification"
+	case "de-DE":
+		return "OnBio | E-Mail-Verifizierung"
+	case "es-ES":
+		return "OnBio | Verificacion de email"
+	case "fr-FR":
+		return "OnBio | Vérification de l'E-mail"
+	case "hi-IN":
+		return "OnBio | ई - मेल सत्यापन"
+	case "id-ID":
+		return "OnBio | Verifikasi email"
+	case "it-IT":
+		return "OnBio | Verifica email"
+	case "jp-JP":
+		return "OnBio | メールによる確認"
+	case "ko-KR":
+		return "OnBio | 이메일 확인"
+	case "pt-PT":
+		return "OnBio | Verificação de e-mail"
+	case "ru-RU":
+		return "OnBio | Подтверждение по элетронной почте"
+	case "th-TH":
+		return "OnBio | การยืนยันอีเมล"
+	case "vi-VN":
+		return "OnBio | Email xác thực"
+	case "zh-TW":
+		return "OnBio | 郵箱驗證"
+	}
+	return "OnBio | Email verification"
 }
