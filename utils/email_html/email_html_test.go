@@ -15,6 +15,12 @@ func TestGenerateHtml(t *testing.T) {
 		wantErr       bool
 	}{
 		// TODO: Add test cases.
+		{
+			name:          "jonesjedi@gmail.com",
+			args:          args{userName: "jonesjedi@gmail.com", url: "https://onb.io", emailType: 1},
+			wantEmailBody: "",
+			wantErr:       false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
